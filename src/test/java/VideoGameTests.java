@@ -20,17 +20,17 @@ public class VideoGameTests extends VideoGameConfig {
     }
 
     @Test
-    public void createNewGameBYJSON(){
+    public void createNewGameBYJSON() {
 
         RestAssured.given()
-                            .body(gameBodyJson)
-                    .when()
-                            .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
-                    .then();
+                .body(gameBodyJson)
+                .when()
+                .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
+                .then();
     }
 
     @Test
-    public void createNewGameByXML(){
+    public void createNewGameByXML() {
 
         String gameBodyXml = "<VideoGameRequest>\n" +
                 "\t<category>Platform</category>\n" +
@@ -47,14 +47,20 @@ public class VideoGameTests extends VideoGameConfig {
     }
 
     @Test
-    public void updateGame(){
+    public void updateGame() {
 
         RestAssured.given().body(gameBodyJson).when().put("videogame/3").then();
 
     }
 
     @Test
-    public void deleteGame(){
+    public void deleteGame() {
         RestAssured.given().accept("text/plain").when().delete("videogame/8").then();
+    }
+
+    @Test
+    public void getSingleGame(){
+    RestAssured.given().pathParam("videoGameId", 5)
+            .when().get(VideoGameEndPoints.SINGLE_VIDEO_GAME).then();
     }
 }

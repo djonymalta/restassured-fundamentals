@@ -60,7 +60,7 @@ public class VideoGameTests extends VideoGameConfig {
 
     @Test
     public void getSingleGame(){
-    RestAssured.given().pathParam("videoGameId", 5)
-            .when().get(VideoGameEndPoints.SINGLE_VIDEO_GAME).then();
+        RestAssured.given().pathParam("videoGameId", 5)
+                .when().get(VideoGameEndPoints.SINGLE_VIDEO_GAME).then();
     }
 }

@@ -4,6 +4,13 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 
 public class VideoGameTests extends VideoGameConfig {
+    String gameBodyJson = "{\n" +
+            "  \"category\": \"Platform\",\n" +
+            "  \"name\": \"Mario\",\n" +
+            "  \"rating\": \"Mature\",\n" +
+            "  \"releaseDate\": \"2023-01-25\",\n" +
+            "  \"reviewScore\": 89\n" +
+            "}";
 
     @Test
     public void getAllGames() {
@@ -14,13 +21,7 @@ public class VideoGameTests extends VideoGameConfig {
 
     @Test
     public void createNewGameBYJSON(){
-        String gameBodyJson = "{\n" +
-                "  \"category\": \"Platform\",\n" +
-                "  \"name\": \"Mario\",\n" +
-                "  \"rating\": \"Mature\",\n" +
-                "  \"releaseDate\": \"2023-01-25\",\n" +
-                "  \"reviewScore\": 89\n" +
-                "}";
+
         RestAssured.given()
                             .body(gameBodyJson)
                     .when()
@@ -43,5 +44,12 @@ public class VideoGameTests extends VideoGameConfig {
                 .contentType("application/xml")
                 .accept("application/xml")
                 .when().post(VideoGameEndPoints.ALL_VIDEO_GAMES).then();
+    }
+
+    @Test
+    public void updateGame(){
+
+        RestAssured.given().body(gameBodyJson).when().put("videogame/3").then();
+
     }
 }

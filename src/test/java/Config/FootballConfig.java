@@ -12,7 +12,7 @@ public class FootballConfig {
     public static void setup(){
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setBaseUri("https://api.football-data.org")
-                .setBasePath("/v4")
+                .setBasePath("/v4/")
                 .addHeader("X-Auth-Token", "a686155e0bb8469eaa997a84cec6a128")
                 .addHeader("X-Response-Control", "minified")
                 .addFilter(new RequestLoggingFilter())

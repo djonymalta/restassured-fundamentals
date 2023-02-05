@@ -33,7 +33,7 @@ public class FootballTests extends FootballConfig {
     @Test
     public void getDateFounded(){
         RestAssured
-                .get("/teams/57")
+                .get("teams/57")
                 .then()
                 .body("founded", CoreMatchers.equalTo(1886));
     }
@@ -69,5 +69,20 @@ public class FootballTests extends FootballConfig {
         String jsonResponseAsString = response.asString();
 
         System.out.println(jsonResponseAsString);
+    }
+
+    @Test
+    public void extractHeaders(){
+        Response response = RestAssured
+                .get("teams/57")
+                .then()
+                .extract().response();
+
+        String contentTypHeader = response.getContentType();
+        System.out.println(contentTypHeader);
+
+        String apiVersionHeader = response.getHeader("X-API-Version");
+        System.out.println(apiVersionHeader);
+
     }
 }

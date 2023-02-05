@@ -1,6 +1,8 @@
 import Config.FootballConfig;
 import io.restassured.RestAssured;
 
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
@@ -45,5 +47,27 @@ public class FootballTests extends FootballConfig {
                 .then()
                 .body("teams.name[0]", CoreMatchers.equalTo("Arsenal FC"));
 
+    }
+
+    @Test
+    public void getAllTeamData(){
+        String responseBody = RestAssured.get("teams/57").asString();
+        System.out.println(responseBody);
+
+    }
+
+    @Test
+    public void getAllTeamData_DoCheckFirst(){
+        Response response = RestAssured
+                .given()
+                .when()
+                .get("teams/57")
+                .then()
+                .contentType(ContentType.JSON)
+                .extract().response();
+
+        String jsonResponseAsString = response.asString();
+
+        System.out.println(jsonResponseAsString);
     }
 }

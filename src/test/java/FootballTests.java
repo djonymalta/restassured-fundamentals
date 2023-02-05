@@ -6,6 +6,8 @@ import io.restassured.response.Response;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class FootballTests extends FootballConfig {
 
     @Test
@@ -84,5 +86,27 @@ public class FootballTests extends FootballConfig {
         String apiVersionHeader = response.getHeader("X-API-Version");
         System.out.println(apiVersionHeader);
 
+    }
+
+    @Test
+    public void extractFirstTeamname(){
+        String firsTeamName = RestAssured
+                .get("competitions/2021/teams")
+                .jsonPath()
+                .getString("teams.name[0]");
+        System.out.println(firsTeamName);
+    }
+
+    @Test
+    public void extractAllTeams(){
+        Response response = RestAssured
+                .get("competitions/2021/teams")
+                .then()
+                .extract().response();
+
+        List<String> teamNames= response.path("teams.name");
+        for (String teamName: teamNames) {
+            System.out.println(teamName);
+        }
     }
 }

@@ -1,6 +1,7 @@
 import Config.VideoGameConfig;
 import Config.VideoGameEndPoints;
 import io.restassured.RestAssured;
+import io.restassured.matcher.RestAssuredMatchers;
 import objects.VideoGame;
 import org.junit.jupiter.api.Test;
 
@@ -74,5 +75,17 @@ public class VideoGameTests extends VideoGameConfig {
                 .when()
                 .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
                 .then();
+    }
+
+    @Test
+    public void testVideoGameSchemaXML(){
+     RestAssured
+             .given()
+             .pathParam("videoGameId", 5)
+             .accept("application/xml")
+             .when()
+             .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
+             .then()
+             .body(RestAssuredMatchers.matchesXsdInClasspath("VideoGameXsd.xsd"));
     }
 }

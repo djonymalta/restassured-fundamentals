@@ -2,6 +2,7 @@ import Config.VideoGameConfig;
 import Config.VideoGameEndPoints;
 import io.restassured.RestAssured;
 import io.restassured.matcher.RestAssuredMatchers;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import objects.VideoGame;
 import org.junit.jupiter.api.Test;
 
@@ -87,5 +88,17 @@ public class VideoGameTests extends VideoGameConfig {
              .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
              .then()
              .body(RestAssuredMatchers.matchesXsdInClasspath("VideoGameXsd.xsd"));
+    }
+
+    @Test
+    public void testVideoGameSchemaJSON(){
+        RestAssured
+                .given()
+                .pathParam("videoGameId", 5)
+                .accept("application/json")
+                .when()
+                .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
+                .then()
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("VideoGameJsonSchema.json"));
     }
 }

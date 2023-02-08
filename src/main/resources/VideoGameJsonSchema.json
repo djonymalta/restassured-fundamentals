@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "default": {},
+  "required": [
+    "id",
+    "name",
+    "releaseDate",
+    "reviewScore",
+    "category",
+    "rating"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "default": 0
+    },
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "releaseDate": {
+      "type": "string",
+      "default": ""
+    },
+    "reviewScore": {
+      "type": "integer",
+      "default": 0
+    },
+    "category": {
+      "type": "string",
+      "default": ""
+    },
+    "rating": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}

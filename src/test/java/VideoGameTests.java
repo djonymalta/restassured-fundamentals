@@ -5,6 +5,7 @@ import io.restassured.matcher.RestAssuredMatchers;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import objects.VideoGame;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 public class VideoGameTests extends VideoGameConfig {
@@ -114,5 +115,21 @@ public class VideoGameTests extends VideoGameConfig {
                 .get(VideoGameEndPoints.SINGLE_VIDEO_GAME)
                 .then()
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("VideoGameJsonSchema.json"));
+    }
+
+    @Test
+    public void captureResponseTime(){
+        long responseTime = RestAssured
+                .get(VideoGameEndPoints.ALL_VIDEO_GAMES)
+                .time();
+        System.out.println("Response time in MS: " + responseTime);
+    }
+
+    @Test
+    public void assertOnReponseTime(){
+        RestAssured
+                .get(VideoGameEndPoints.ALL_VIDEO_GAMES)
+                .then()
+                .time(Matchers.lessThan(1000L));
     }
 }

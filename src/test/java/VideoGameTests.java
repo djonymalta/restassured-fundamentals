@@ -3,6 +3,7 @@ import Config.VideoGameEndPoints;
 import io.restassured.RestAssured;
 import io.restassured.matcher.RestAssuredMatchers;
 import io.restassured.module.jsv.JsonSchemaValidator;
+import io.restassured.response.Response;
 import objects.VideoGame;
 import org.junit.jupiter.api.Test;
 
@@ -76,6 +77,19 @@ public class VideoGameTests extends VideoGameConfig {
                 .when()
                 .post(VideoGameEndPoints.ALL_VIDEO_GAMES)
                 .then();
+    }
+
+    @Test
+    public void convertJsonToPojo(){
+        Response response =  RestAssured
+                .given()
+                .pathParam("videoGameId", 5)
+                .get(VideoGameEndPoints.SINGLE_VIDEO_GAME);
+
+        VideoGame videoGame = ((Response) response).getBody().as(VideoGame.class);
+        System.out.println(videoGame);
+
+
     }
 
     @Test

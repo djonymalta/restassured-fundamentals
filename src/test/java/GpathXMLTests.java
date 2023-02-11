@@ -1,8 +1,13 @@
 import Config.VideoGameConfig;
 import Config.VideoGameEndPoints;
 import io.restassured.RestAssured;
+import io.restassured.path.xml.XmlPath;
+import io.restassured.path.xml.element.Node;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static io.restassured.RestAssured.*;
 
 public class GpathXMLTests extends VideoGameConfig {
@@ -24,5 +29,15 @@ public class GpathXMLTests extends VideoGameConfig {
 
                 String categody = response.path("List.item[0].@category");
         System.out.println(categody);
+    }
+
+    @Test
+    public void getListOfXmlNodes(){
+        String responseAsString = get(VideoGameEndPoints.ALL_VIDEO_GAMES).asString();
+
+        List<Node> allResults = XmlPath.from(responseAsString).get(
+                "List.item.findAll { element -> return element } "
+        );
+        System.out.println(allResults.get(2).get("name").toString());
     }
 }

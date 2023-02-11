@@ -17,4 +17,12 @@ public class GpathXMLTests extends VideoGameConfig {
 
         System.out.println(name);
     }
+
+    @Test
+    public void getAttribute(){
+        Response response = get(VideoGameEndPoints.ALL_VIDEO_GAMES);
+
+                String categody = response.path("List.item[0].@category");
+        System.out.println(categody);
+    }
 }

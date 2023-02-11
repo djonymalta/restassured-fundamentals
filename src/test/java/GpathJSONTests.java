@@ -3,6 +3,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,34 @@ public class GpathJSONTests extends FootballConfig {
 
         int somOfIds = response.path("squad.collect { it.id}.sum()");
         System.out.println("Sum of All IDs" + somOfIds);
+    }
+
+    @Test
+    public void extractMapWithFindAndFindAllWithParameters(){
+        String position = "Offence";
+        String nationality = "England";
+
+        Response response = RestAssured
+                .get("teams/57");
+        Map<String, ?> playerOfCertainPosition = response.path("squad.findAll { it.position == '%s' }.find { it.nationality == '%s'}",
+                position, nationality
+        );
+        System.out.println("Details of player: " + playerOfCertainPosition);
+
+    }
+
+    @Test
+    public void extractMultiplePlayers(){
+        String position = "Offence";
+        String nationality = "England";
+
+        Response response = RestAssured
+                .get("teams/57");
+        ArrayList<Map<String, ?>> AllPlayerOfCertainPosition = response.path("squad.findAll { it.position == '%s' }.findAll { it.nationality == '%s'}",
+                position, nationality
+        );
+        System.out.println("Details of players: " + AllPlayerOfCertainPosition);
+
     }
 
 }

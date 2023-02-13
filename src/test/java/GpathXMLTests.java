@@ -50,5 +50,15 @@ public class GpathXMLTests extends VideoGameConfig {
 
     };
 
+    @Test
+    public void getSingleNode(){
+        String responseAsString = get(VideoGameEndPoints.ALL_VIDEO_GAMES).asString();
+
+        Node videoGame = XmlPath.from(responseAsString).get("List.item.find { game -> def name = game.name; name == 'Tetris' }");
+
+        String videoGameName = videoGame.get("name").toString();
+        System.out.println(videoGameName);
+    }
+
 
 }
